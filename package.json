@@ -1,0 +1,39 @@
+{
+  "name": "react-d3",
+  "version": "1.0.0",
+  "description": "react d3 component",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "d3": "^4.12.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nokisnojok/react-d3.git"
+  },
+  "keywords": [
+    "react",
+    "d3.js"
+  ],
+  "author": "wanglin (843022618@qq.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nokisnojok/react-d3/issues"
+  },
+  "homepage": "https://github.com/nokisnojok/react-d3#readme"
+}
