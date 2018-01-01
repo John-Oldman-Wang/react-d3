@@ -2,19 +2,20 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-    entry: {
-        app: path.resolve(__dirname, './src/main.js'),
-        //vendor: ['react', 'react-dom', 'react-router-dom','moment']
-    },
+    entry: path.resolve(__dirname, './src/main.js'),
     output: {
         // publicPath: path.resolve(__dirname, './build'),
         path: path.resolve(__dirname, './build'),
         filename: 'bundle.js',
     },
-    module:{
-        rules:[
-            {test: /\.js$/, exclude : /node_modules/,loader :"babel-loader"}
+    module: {
+        rules: [
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
         ]
+    },
+    devServer: {
+        inline: true,
+        port: 3000
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -36,11 +37,8 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            filename: './index.html'
-        })
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        //     filename: 'vendor.js'
-        // })
+            // filename: './index.html'
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ]
 };
