@@ -3,6 +3,7 @@ const { Component } = require("react")
 const ReactDom = require("react-dom")
 
 const Logger=require("./components/logger.js")
+const Line=require("./components/line.js")
 // console.log(reReactact)
 
 const d3 = require("d3")
@@ -16,16 +17,12 @@ class App extends Component {
         }
         window.t=this
     }
-    getDefaultProps() {
-        return {
-            a: 1
-        }
-    }
     render() {
         return (
             <div>
-                <h1>result</h1>
-                <Logger data={this.state.results} />
+                <h1>Line</h1>
+                <Line></Line>
+                {/* <Logger data={this.state.results} /> */}
             </div>)
     }
 }
