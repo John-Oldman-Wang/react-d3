@@ -43,6 +43,23 @@ class Line extends Component {
         window.l = this
     }
     componentWillReceiveProps() {
+        var data=this.state.data
+        this.state.xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
+            return d.x;
+        })).range([0, this.state.width - 2 * this.state.left]);
+        var xScale = this.state.xScale
+        this.state.yScale = d3.scaleLinear().domain([0, d3.max(data, function (d) {
+            return d.y;
+        })]).range([this.state.height - 2 * this.state.top, 0]);
+        var yScale = this.state.yScale
+        this.state.xAxis = d3.axisBottom(xScale)
+        this.state.yAxis = d3.axisLeft(yScale)
+        var line = d3.line().x( (d)=> {
+            return this.state.xScale(d.x)
+        }).y( (d)=> {
+            return this.state.yScale(d.y);
+        }).curve(d3.curveCatmullRom.alpha(0.5))
+        this.state.d=line(this.state.data)
         console.log("componentWillReceiveProps", arguments)
     }
     shouldComponentUpdate() {
@@ -54,27 +71,32 @@ class Line extends Component {
     }
     componentDidUpdate() {
         console.log("componentDidUpdate", arguments)
+        d3.select("#lineAxis").select("g").remove()
+        d3.select("#lineAxis").append('g').call(this.state.yAxis)
+        d3.select("#lineAxis").append('g').attr("transform","translate(0,"+(this.state.height-2*this.state.top)+")").call(this.state.xAxis)
     }
     componentWillMount() {
         console.log("componentWillMount", arguments)
     }
     componentDidMount() {
         console.log("componentDidMount", arguments)
-        d3.select("#main").append('g').call(this.state.yAxis)
-        d3.select("#main").append('g').attr("transform","translate(0,"+(this.state.height-2*this.state.top)+")").call(this.state.xAxis)
+        d3.select("#lineAxis").append('g').call(this.state.yAxis)
+        d3.select("#lineAxis").append('g').attr("transform","translate(0,"+(this.state.height-2*this.state.top)+")").call(this.state.xAxis)
     }
     render() {
+        console.log("render")
         return (<div><svg style={{
             width: this.state.width,
             height: this.state.height,
             userSelect: "none"
         }}>
-            <g ref="g" id="main" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)'}}>
+            <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)'}}>
                 {this.state.data.map(item => {
                     return <circle cx={this.state.xScale(item.x)} cy={this.state.yScale(item.y)} r="4" stroke="black" strokeWidth="1" fill="none" />
                 })}
                 <path d={this.state.d} fill="none" strokeWidth="1px" stroke="red"></path>
             </g>
+            <g id="lineAxis" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
         </svg>
         <ul>
             {this.state.data.map(item=>{
