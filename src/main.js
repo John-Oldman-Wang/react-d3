@@ -15,7 +15,7 @@ class App extends Component {
         super()
         this.state = {
             lineData: [
-                { x: 0, y: 11 }, { x: 1, y: 35 },
+                { x: 0, y: 40 }, { x: 1, y: 35 },
                 { x: 2, y: 23 }, { x: 3, y: 78 },
                 { x: 4, y: 55 }, { x: 5, y: 18 },
                 { x: 6, y: 98 }, { x: 7, y: 100 },
@@ -23,18 +23,40 @@ class App extends Component {
             ]
         }
         window.t = this
+        setTimeout(()=>{
+            this.setState({
+                line:0
+            })
+        },3000)
     }
     render() {
-        return (
-            <div>
-                <h1>Line</h1>
-                <Line data={this.state.lineData}></Line>
-                <h1>Area</h1>
-                <Area ></Area>
-                <h1>Arc</h1>
-                <Arc ></Arc>
-                {/* <Logger data={this.state.results} /> */}
-            </div>)
+        if (this.state.line != 0) { 
+            return (
+                <div>
+                    <h1>Line</h1>
+                    <Line data={this.state.lineData}></Line>
+                    <h1>Area</h1>
+                    <Area ></Area>
+                    <h1>Arc</h1>
+                    <Arc ></Arc>
+                </div>)
+        }else{
+            return (
+                <div>
+                    <h1>Line</h1>
+                    <Line data={this.state.lineData}></Line>
+                    <h1>Area</h1>
+                    <Area ></Area>
+                    <h1>Arc</h1>
+                    <Arc data={[{ "number": 8, "name": "Locke" },
+                                { "number": 8, "name": "Reyes" },
+                                { "number": 8, "name": "Ford" },
+                                { "number": 8, "name": "Jarrah" },
+                                { "number": 8, "name": "Shephard" },
+                                { "number": 8, "name": "Kwon" }
+                                ]}></Arc>
+                </div>)
+        }
     }
 }
 ReactDom.render(<App />, document.getElementById("root"))

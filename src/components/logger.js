@@ -18,9 +18,9 @@ class Logger extends Component{
     componentWillReceiveProps(){
         console.log("componentWillReceiveProps",arguments)
     }
-    shouldComponentUpdate(){
-        console.log("shouldComponentUpdate", arguments)
-        return false
+    shouldComponentUpdate(nextprops, nextstate) {
+        console.log("arc shouldComponentUpdate")
+        return true
     }
     componentWillUpdate(){
         console.log("componentWillUpdate", arguments)
