@@ -85,15 +85,15 @@ class Line extends Component {
         }}>
             <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)'}}>
                 <path d={line(data)} fill="none" strokeWidth="1px" stroke="red"></path>
-                {this.state.data.map(item => {
-                    return <circle cx={xScale(item.x)} cy={yScale(item.y)} r="4" stroke="black" strokeWidth="1" fill="#fff" />
+                {this.state.data.map((item,index) => {
+                    return <circle key={index} cx={xScale(item.x)} cy={yScale(item.y)} r="4" stroke="black" strokeWidth="1" fill="#fff" />
                 })}
             </g>
             <g id="lineAxis" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
         </svg>
         <ul>
-            {this.state.data.map(item=>{
-                return <li>{"x: "+item.x+", y: "+item.y}</li>
+            {this.state.data.map((item,index)=>{
+                return <li key={index}>{"x: "+item.x+", y: "+item.y}</li>
             })}
         </ul>
         </div>)

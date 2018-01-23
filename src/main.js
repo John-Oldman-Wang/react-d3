@@ -1,5 +1,5 @@
 const React = require("react")
-const { Component } = require("react")
+const Component = React.Component
 const ReactDom = require("react-dom")
 
 const Logger = require("./components/logger.js")
@@ -23,14 +23,14 @@ class App extends Component {
             ]
         }
         window.t = this
-        setTimeout(()=>{
-            this.setState({
-                line:0
-            })
-        },3000)
+        // setTimeout(()=>{
+        //     this.setState({
+        //         line:0
+        //     })
+        // },3000)
     }
     render() {
-        if (this.state.line != 0) { 
+        if (this.state.line != 0) {
             return (
                 <div>
                     <h1>Line</h1>
@@ -40,7 +40,7 @@ class App extends Component {
                     <h1>Arc</h1>
                     <Arc ></Arc>
                 </div>)
-        }else{
+        } else {
             return (
                 <div>
                     <h1>Line</h1>
@@ -49,12 +49,12 @@ class App extends Component {
                     <Area ></Area>
                     <h1>Arc</h1>
                     <Arc data={[{ "number": 8, "name": "Locke" },
-                                { "number": 8, "name": "Reyes" },
-                                { "number": 8, "name": "Ford" },
-                                { "number": 8, "name": "Jarrah" },
-                                { "number": 8, "name": "Shephard" },
-                                { "number": 8, "name": "Kwon" }
-                                ]}></Arc>
+                    { "number": 8, "name": "Reyes" },
+                    { "number": 8, "name": "Ford" },
+                    { "number": 8, "name": "Jarrah" },
+                    { "number": 8, "name": "Shephard" },
+                    { "number": 8, "name": "Kwon" }
+                    ]}></Arc>
                 </div>)
         }
     }

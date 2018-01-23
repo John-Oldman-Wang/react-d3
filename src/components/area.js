@@ -88,16 +88,16 @@ class Area extends Component {
             userSelect: "none"
         }}>
             <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}>
-                {this.state.data.map(item => {
-                    return <circle cx={xScale(item.date)} cy={yScale(item.value)} r="4" stroke="black" strokeWidth="1" fill="none" />
+                {this.state.data.map((item, index) => {
+                    return <circle key={index} cx={xScale(item.date)} cy={yScale(item.value)} r="4" stroke="black" strokeWidth="1" fill="none" />
                 })}
                 <path d={area(this.state.data)} fill="rgba(0,0,200,0.5)" strokeWidth="1px" stroke="rgba(0,0,200,0.5)"></path>
             </g>
             <g id="main" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
         </svg>
             <ul>
-                {this.state.data.map(item => {
-                    return <li>{"x: " + item.date + ", y: " + item.value}</li>
+                {this.state.data.map((item, index) => {
+                    return <li key={index}>{"x: " + item.date + ", y: " + item.value}</li>
                 })}
             </ul>
         </div>)
