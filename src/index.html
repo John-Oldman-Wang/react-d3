@@ -6,12 +6,27 @@
     <title>React-d3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        path{
+        svg *{
+            transition: all 3s ease;
+            /* transition: height,y 3s ease; */
+            /* -webkit-transition: all 0.3 ease; */
+        }
+        /* path{
             transition: all 0.3 ease-in;
+        }
+        rect{
+            transition: all 0.3 ease-in;
+        } */
+        #root{
+            width: 1000px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
+    <!-- <div id='test'>
+        <div id="t"></div>
+    </div> -->
     <div id="root"></div>
     <script src="./main.js"></script>
 </body>

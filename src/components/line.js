@@ -20,18 +20,19 @@ class Line extends Component {
         this.state=Object.assign(config,this.props)    
         window.l = this
     }
-    componentWillReceiveProps() {
-        console.log("componentWillReceiveProps", arguments)
+    componentWillReceiveProps(nextprops) {
+        this.setState(Object.assign({}, this.state, nextprops))
+        // console.log("componentWillReceiveProps", arguments)
     }
     shouldComponentUpdate(nextprops, nextstate) {
-        console.log("arc shouldComponentUpdate")
+        // console.log("arc shouldComponentUpdate")
         return true
     }
     componentWillUpdate() {
-        console.log("componentWillUpdate", arguments)
+        // console.log("componentWillUpdate", arguments)
     }
     componentDidUpdate() {
-        console.log("componentDidUpdate", arguments)
+        // console.log("componentDidUpdate", arguments)
         d3.select("#lineAxis").select("g").remove()
         var data = this.state.data
         var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
@@ -46,10 +47,10 @@ class Line extends Component {
         d3.select("#lineAxis").append('g').attr("transform", "translate(0," + (this.state.height - 2 * this.state.top) + ")").call(xAxis)
     }
     componentWillMount() {
-        console.log("componentWillMount", arguments)
+        // console.log("componentWillMount", arguments)
     }
     componentDidMount() {
-        console.log("componentDidMount", arguments)
+        // console.log("componentDidMount", arguments)
         var data = this.state.data
         var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
             return d.x;
@@ -57,13 +58,12 @@ class Line extends Component {
         var yScale = d3.scaleLinear().domain([0, d3.max(data, function (d) {
             return d.y;
         })]).range([this.state.height - 2 * this.state.top, 0]);
-        var xAxis = d3.axisBottom(xScale)
-        var yAxis = d3.axisLeft(yScale)
+        var xAxis = d3.axisBottom(xScale)//.ticks(9).tickSize(-this.state.height, 0, 0)
+        var yAxis = d3.axisLeft(yScale)//.ticks(10).tickSize(-this.state.width,0,0)
         d3.select("#lineAxis").append('g').call(yAxis)
         d3.select("#lineAxis").append('g').attr("transform","translate(0,"+(this.state.height-2*this.state.top)+")").call(xAxis)
     }
     render() {
-        console.log("render")
         var data=this.state.data
         var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
             return d.x;
@@ -76,8 +76,6 @@ class Line extends Component {
         }).y(function (d) {
             return yScale(d.y);
         }).curve(d3.curveCatmullRom.alpha(0.5))
-        this.state.xAxis = d3.axisBottom(xScale)
-        this.state.yAxis = d3.axisLeft(yScale)
         return (<div><svg style={{
             width: this.state.width,
             height: this.state.height,

@@ -23,29 +23,29 @@ class Arc extends Component {
     }
     componentWillReceiveProps(nextprops) {
         this.setState(Object.assign({}, this.state, nextprops))
-        console.log("arc componentWillReceiveProps", arguments)
+        // console.log("arc componentWillReceiveProps", arguments)
     }
     shouldComponentUpdate(nextprops, nextstate) {
-        console.log("arc shouldComponentUpdate")
+        // console.log("arc shouldComponentUpdate")
         return true
     }
     componentWillUpdate() {
-        console.log("componentWillUpdate", arguments)
+        // console.log("componentWillUpdate", arguments)
     }
     componentDidUpdate() {
-        console.log("componentDidUpdate", arguments)
+        // console.log("componentDidUpdate", arguments)
     }
     componentWillMount() {
-        console.log("componentWillMount", arguments)
+        // console.log("componentWillMount", arguments)
     }
     componentDidMount() {
-        console.log("componentDidMount", arguments)
+        // console.log("componentDidMount", arguments)
     }
     render() {
-        console.log("render")
+        // console.log("render")
         var arcdata = d3.pie().value(function (d) { return d.number; })(this.state.data)
         var arc = d3.arc().padAngle(2).padRadius(2).innerRadius(this.state.innerRadius).outerRadius(this.state.outerRadius)
-        console.log(arc.centroid)
+        //console.log(arc.centroid)
         return (<div><svg style={{
             width: this.state.width,
             height: this.state.height,
@@ -57,7 +57,7 @@ class Arc extends Component {
                     </path>)
                 })}
                 {arcdata.map((item, index) => {
-                    return (<text key={index} fontSize="20px" fill="red" x={0} y={0} transform={"translate(" + arc.centroid(item)+ ")"}>{item.data.name + ":" + item.data.number}
+                    return (<text key={index} fontSize="20px" fill="#222" x={0} y={0} transform={"translate(" + arc.centroid(item)+ ")"}>{item.data.name + ":" + item.data.number}
                     </text>)
                 })}
             </g>

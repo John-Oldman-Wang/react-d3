@@ -22,17 +22,18 @@ class Area extends Component {
         window.area = this
     }
     componentWillReceiveProps(nextprops) {
-        console.log("componentWillReceiveProps", arguments)
+        this.setState(Object.assign({}, this.state, nextprops))
+        // console.log("componentWillReceiveProps", arguments)
     }
     shouldComponentUpdate(nextprops, nextstate) {
-        console.log("arc shouldComponentUpdate")
+        // console.log("arc shouldComponentUpdate")
         return true
     }
     componentWillUpdate() {
-        console.log("componentWillUpdate", arguments)
+        // console.log("componentWillUpdate", arguments)
     }
     componentDidUpdate() {
-        console.log("componentDidUpdate", arguments)
+        // console.log("componentDidUpdate", arguments)
         d3.select("#main").select("g").remove()
         var data = this.state.data
         var xScale = d3.scaleTime().domain(d3.extent(data, function (d) {
@@ -47,10 +48,10 @@ class Area extends Component {
         d3.select("#main").append('g').attr("transform", "translate(0," + (this.state.height - 2 * this.state.top) + ")").call(xAxis)
     }
     componentWillMount() {
-        console.log("componentWillMount", arguments)
+        // console.log("componentWillMount", arguments)
     }
     componentDidMount() {
-        console.log("componentDidMount", arguments)
+        // console.log("componentDidMount", arguments)
         var data = this.state.data
         var xScale = d3.scaleTime().domain(d3.extent(data, function (d) {
             return d.date;
@@ -64,7 +65,7 @@ class Area extends Component {
         d3.select("#main").append('g').attr("transform", "translate(0," + (this.state.height - 2 * this.state.top) + ")").call(xAxis)
     }
     render() {
-        console.log("render")
+        // console.log("render")
         var data = this.state.data
         var xScale = d3.scaleTime().domain(d3.extent(data, function (d) {
             return d.date;
