@@ -11,6 +11,13 @@
             /* transition: height,y 3s ease; */
             /* -webkit-transition: all 0.3 ease; */
         }
+        svg.map *{
+            transition: none;
+        }
+        svg.map path{
+            /* transition: none; */
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+        }
         /* path{
             transition: all 0.3 ease-in;
         }
@@ -18,7 +25,9 @@
             transition: all 0.3 ease-in;
         } */
         #root{
-            width: 1000px;
+            width: auto;
+            /* display: inline-block; */
+            text-align: center;
             margin: 0 auto;
         }
     </style>
