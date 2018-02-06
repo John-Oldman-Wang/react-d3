@@ -32,53 +32,21 @@ class App extends Component {
         },3000)
     }
     render() {
-        if (this.state.line != 0) {
-            return (
-                <div>
-                    <h1>Line</h1>
-                    <Line></Line>
-                    <h1>Area</h1>
-                    <Area ></Area>
-                    <h1>Arc</h1>
-                    <Arc ></Arc>
-                    <h1>Bar</h1>
-                    <Bar />
-                    <h1>ChinaMap</h1>
-                    <ChinaMap />
-                </div>)
-        } else {
-            return (
-                <div>
-                    <h1>Line</h1>
-                    <Line data={this.state.lineData}></Line>
-                    <h1>Area</h1>
-                    <Area data={[
-                        {date: new Date(2007, 3, 24), value: 60.24 },
-                        {date: new Date(2007, 3, 25), value: 75.35 },
-                        {date: new Date(2007, 3, 26), value: 80.84 },
-                        {date: new Date(2007, 3, 27), value: 93.92 },
-                        {date: new Date(2007, 3, 30), value: 97.80 },
-                        {date: new Date(2007, 4, 1), value: 99.47 }
-                    ]}></Area>
-                    <h1>Arc</h1>
-                    <Arc data={[{ "number": 20, "name": "Locke" },
-                    { "number": 30, "name": "Reyes" },
-                    { "number": 19, "name": "Ford" },
-                    { "number": 23, "name": "Jarrah" },
-                    { "number": 10, "name": "Shephard" },
-                    { "number": 8, "name": "Kwon" }
-                    ]}></Arc>
-                    <h1>Bar</h1>
-                    <Bar data={[{ "number": 8, "name": "Locke" },
-                        { "number": 88, "name": "Reyes" },
-                        { "number": 38, "name": "Ford" },
-                        { "number": 58, "name": "Jarrah" },
-                        { "number": 28, "name": "Shephard" },
-                        { "number": 18, "name": "Kwon" }]}/>
-                    <h1>ChinaMap</h1>
-                    <ChinaMap />
-                </div>)
-        }
+        return (
+            <div id='wrap' style={{
+                width:'1000px'
+            }}>
+                {/* <h1>Line</h1>
+                <Line></Line>
+                <h1>Area</h1>
+                <Area ></Area>
+                <h1>Arc</h1>
+                <Arc ></Arc>
+                <h1>Bar</h1>
+                <Bar /> */}
+                <h1>ChinaMap</h1>
+                <ChinaMap />
+            </div>)
     }
 }
 ReactDom.render(<App />, document.getElementById("root"))

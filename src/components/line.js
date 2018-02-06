@@ -4,8 +4,8 @@ const ReactDom = require("react-dom")
 class Line extends Component {
     constructor(props) {
         super(props)
-        var config={
-            width: 1100,
+        var config = {
+            width: 1000,
             height: 600,
             top: 50,
             left: 50,
@@ -17,7 +17,7 @@ class Line extends Component {
                 { x: 8, y: 22 }, { x: 9, y: 65 }
             ]
         }
-        this.state=Object.assign(config,this.props)    
+        this.state = Object.assign(config, this.props)
         window.l = this
     }
     componentWillReceiveProps(nextprops) {
@@ -61,10 +61,10 @@ class Line extends Component {
         var xAxis = d3.axisBottom(xScale)//.ticks(9).tickSize(-this.state.height, 0, 0)
         var yAxis = d3.axisLeft(yScale)//.ticks(10).tickSize(-this.state.width,0,0)
         d3.select("#lineAxis").append('g').call(yAxis)
-        d3.select("#lineAxis").append('g').attr("transform","translate(0,"+(this.state.height-2*this.state.top)+")").call(xAxis)
+        d3.select("#lineAxis").append('g').attr("transform", "translate(0," + (this.state.height - 2 * this.state.top) + ")").call(xAxis)
     }
     render() {
-        var data=this.state.data
+        var data = this.state.data
         var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
             return d.x;
         })).range([0, this.state.width - 2 * this.state.left]);
@@ -76,25 +76,42 @@ class Line extends Component {
         }).y(function (d) {
             return yScale(d.y);
         }).curve(d3.curveCatmullRom.alpha(0.5))
-        return (<div><svg style={{
-            width: this.state.width,
-            height: this.state.height,
-            userSelect: "none"
-        }}>
-            <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)'}}>
-                <path d={line(data)} fill="none" strokeWidth="1px" stroke="red"></path>
-                {this.state.data.map((item,index) => {
-                    return <circle key={index} cx={xScale(item.x)} cy={yScale(item.y)} r="4" stroke="black" strokeWidth="1" fill="#fff" />
-                })}
-            </g>
-            <g id="lineAxis" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
-        </svg>
-        <ul>
-            {this.state.data.map((item,index)=>{
-                return <li key={index}>{"x: "+item.x+", y: "+item.y}</li>
-            })}
-        </ul>
-        </div>)
+        return (<div><div
+            style={{
+                width: '100%',//this.state.width,
+                position: 'relative',
+                //overflow: 'hidden',
+                paddingBottom: this.state.height / this.state.width * 100 + '%',
+            }}
+        >
+            <svg
+                viewBox={"0 0 " + this.state.width + " " + this.state.height}
+                preserveAspectRatio="xMinYMin meet"
+                style={{
+                    width: '100%',
+                    position: 'absolute',
+                    top: '0',
+                    left: '0',
+                    bottom: '0',
+                    userSelect: "none"
+                }}>
+                <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}>
+                    <path d={line(data)} fill="none" strokeWidth="1px" stroke="red"></path>
+                    {this.state.data.map((item, index) => {
+                        return <circle key={index} cx={xScale(item.x)} cy={yScale(item.y)} r="4" stroke="black" strokeWidth="1" fill="#fff" />
+                    })}
+                </g>
+                <g id="lineAxis" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
+            </svg>
+        </div>
+            <div>
+                <ul>
+                    {this.state.data.map((item, index) => {
+                        return <li key={index}>{"x: " + item.x + ", y: " + item.y}</li>
+                    })}
+                </ul>
+            </div>
+        </div >)
     }
 }
 module.exports = Line
