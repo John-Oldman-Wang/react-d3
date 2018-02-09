@@ -15,55 +15,50 @@ var config = {
     height: 800
 }
 class ChinaMap extends Component {
-    constructor(props) {
-        super(props)
-        var root = require('../../newChina.js')
-        var details = {
-            "xin_jiang": require("../../json/xin_jiang.geo.js"),
-            "xi_zang": require("../../json/xi_zang.geo.js"),
-            "nei_meng_gu": require("../../json/nei_meng_gu.geo.js"),
-            "qing_hai": require("../../json/qing_hai.geo.js"),
-            "si_chuan": require("../../json/si_chuan.geo.js"),
-            "hei_long_jiang": require("../../json/hei_long_jiang.geo.js"),
-            "gan_su": require("../../json/gan_su.geo.js"),
-            "yun_nan": require("../../json/yun_nan.geo.js"),
-            "guang_xi": require("../../json/guang_xi.geo.js"),
-            "hu_nan": require("../../json/hu_nan.geo.js"),
-            "shan_xi_1": require("../../json/shan_xi_1.geo.js"),
-            "guang_dong": require("../../json/guang_dong.geo.js"),
-            "ji_lin": require("../../json/ji_lin.geo.js"),
-            "he_bei": require("../../json/he_bei.geo.js"),
-            "hu_bei": require("../../json/hu_bei.geo.js"),
-            "gui_zhou": require("../../json/gui_zhou.geo.js"),
-            "shan_dong": require("../../json/shan_dong.geo.js"),
-            "jiang_xi": require("../../json/jiang_xi.geo.js"),
-            "he_nan": require("../../json/he_nan.geo.js"),
-            "liao_ning": require("../../json/liao_ning.geo.js"),
-            "shan_xi_2": require("../../json/shan_xi_2.geo.js"),
-            "an_hui": require("../../json/an_hui.geo.js"),
-            "fu_jian": require("../../json/fu_jian.geo.js"),
-            "zhe_jiang": require("../../json/zhe_jiang.geo.js"),
-            "jiang_su": require("../../json/jiang_su.geo.js"),
-            "chong_qing": require("../../json/chong_qing.geo.js"),
-            "ning_xia": require("../../json/ning_xia.geo.js"),
-            "hai_nan": require("../../json/hai_nan.geo.js"),
-            "bei_jing": require("../../json/bei_jing.geo.js"),
-            "tian_jin": require("../../json/tian_jin.geo.js"),
-            "shang_hai": require("../../json/shang_hai.geo.js")
-        }
-        projection = d3.geoMercator()
-            .center([107, 31])
-            .scale(Math.min(config.width, config.height))
-            .translate([config.width / 2 + 30, config.height / 2 + 0.15 * config.height]);
-        path = d3.geoPath().projection(projection);
-        this.state = {
-            features: root.features,
-            details: details,
-            focus: '',
-            choose: ''
-        }
-        window.m = this
-    }
+    // constructor(props) {
+    //     super(props)
+    //     var root = require('../../newChina.js')
+    //     var details = {
+    //         "新疆": require("../../json/xin_jiang.geo.js"),
+    //         "西藏": require("../../json/xi_zang.geo.js"),
+    //         "内蒙古": require("../../json/nei_meng_gu.geo.js"),
+    //         "青海": require("../../json/qing_hai.geo.js"),
+    //         "四川": require("../../json/si_chuan.geo.js"),
+    //         "黑龙江": require("../../json/hei_long_jiang.geo.js"),
+    //         "甘肃": require("../../json/gan_su.geo.js"),
+    //         "云南": require("../../json/yun_nan.geo.js"),
+    //         "广西": require("../../json/guang_xi.geo.js"),
+    //         "湖南": require("../../json/hu_nan.geo.js"),
+    //         "陕西": require("../../json/shan_xi_1.geo.js"),
+    //         "广东": require("../../json/guang_dong.geo.js"),
+    //         "吉林": require("../../json/ji_lin.geo.js"),
+    //         "河北": require("../../json/he_bei.geo.js"),
+    //         "湖北": require("../../json/hu_bei.geo.js"),
+    //         "贵州": require("../../json/gui_zhou.geo.js"),
+    //         "山东": require("../../json/shan_dong.geo.js"),
+    //         "江西": require("../../json/jiang_xi.geo.js"),
+    //         "河南": require("../../json/he_nan.geo.js"),
+    //         "辽宁": require("../../json/liao_ning.geo.js"),
+    //         "陕西": require("../../json/shan_xi_2.geo.js"),
+    //         "安徽": require("../../json/an_hui.geo.js"),
+    //         "福建": require("../../json/fu_jian.geo.js"),
+    //         "浙江": require("../../json/zhe_jiang.geo.js"),
+    //         "江苏": require("../../json/jiang_su.geo.js"),
+    //         "重庆": require("../../json/chong_qing.geo.js"),
+    //         "宁夏": require("../../json/ning_xia.geo.js"),
+    //         "海南": require("../../json/hai_nan.geo.js"),
+    //         "北京": require("../../json/bei_jing.geo.js"),
+    //         "天津": require("../../json/tian_jin.geo.js"),
+    //         "上海": require("../../json/shang_hai.geo.js")
+    //     }
+    //     this.state = {
+    //         features: root.features,
+    //         details: details,
+    //         focus: '',
+    //         choose: ''
+    //     }
+    //     window.m = this
+    // }
     componentWillReceiveProps() {
         //console.log("componentWillReceiveProps", arguments)
     }
@@ -84,7 +79,70 @@ class ChinaMap extends Component {
         // console.log("componentDidMount", arguments)
     }
     render() {
+        const { features, cp, scale } = this.props
+        projection = d3.geoMercator()
+            .center(cp || [107, 31]) //
+            .scale(!scale ? Math.min(config.width, config.height) : scale * 3) //
+            .translate(cp ? [config.width / 2, config.height / 2]: [config.width / 2 + 30, config.height / 2 + 0.15 * config.height]);
+        path = d3.geoPath().projection(projection);
+        return (<div
+            style={{
+                width: '100%',
+                position: 'relative',
+                paddingBottom: config.height / config.width * 100 + '%',
+            }}>
+            <svg
+                viewBox={"0 0 " + config.width + " " + config.height}
+                preserveAspectRatio="xMinYMin meet"
+                style={{
+                    width: '100%',
+                    position: 'absolute',
+                    top: '0',
+                    left: '0',
+                    bottom: '0',
+                    userSelect: "none"
+                }}
+                ref='svg'
+                className='map'
+            ><g>{
+                features.map((item, index) => {
+                    return (<path
+                        key={index}
+                        fill={color[index]}
+                        d={path(item)}
+                        stroke='#222'
+                        strokeWidth='1'
+                        onMouseOver={(e) => {
+                            e.target.setAttribute('fill', 'yellow')
+                            this.props.focus(e, item)
+                        }}
+                        onMouseOut={function (e) {
+                            e.target.setAttribute('fill', color[index])
+                        }}
+                        onClick={(e) => {
+                            this.props.select(e, item)
+                        }}
+                    >
+                    </path>
+                    )
+                })
+            }</g><g>{features.map((item, index) => {
+                var xy = path.centroid(item)
+                return (<text
+                    key={index}
+                    x={xy[0]}
+                    y={xy[1]}
+                    fill="#000" >{item.properties.name}</text>)
+            })}</g>
+            </svg></div>
+        )
+        /*
         if (this.state.focus == '') {
+            projection = d3.geoMercator()
+                .center([107, 31]) //
+                .scale(Math.min(config.width, config.height)) //
+                .translate([config.width / 2 + 30, config.height / 2 + 0.15 * config.height]);
+            path = d3.geoPath().projection(projection);
             return (<div
                 style={{
                     width: '100%',
@@ -160,7 +218,10 @@ class ChinaMap extends Component {
         }
         else {
             var features = this.state.details[this.state.focus.id].features
-            var $projection = d3.geoMercator().center(this.state.focus.properties.cp).scale((this.state.focus.properties.size || 1000) * 3).translate([config.width / 2, config.height / 2])
+            var $projection = d3.geoMercator()
+                .center(this.state.focus.properties.cp)//
+                .scale((this.state.focus.properties.size || 1000) * 3)//
+                .translate([config.width / 2, config.height / 2])
             var $path = d3.geoPath().projection($projection)
             var axis = $path.centroid(this.state.focus)
             return (<div >
@@ -171,7 +232,7 @@ class ChinaMap extends Component {
                         height: config.height,
                         userSelect: 'none',
                         transition: 'none',
-                        border: '1px solid red'
+                        // border: '1px solid red'
                     }} >
                     <g onClick={(e) => {
                         e.stopPropagation()
@@ -228,7 +289,7 @@ class ChinaMap extends Component {
                         })
                     } </g></svg></div>
             )
-        }
+        }*/
     }
 }
 module.exports = ChinaMap
