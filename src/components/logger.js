@@ -1,6 +1,6 @@
 const React = require("react")
 const { Component } = require("react")
-const ReactDom = require("react-dom")
+const d3 = require("d3")
 class Logger extends Component{
     constructor(props){
         super(props)

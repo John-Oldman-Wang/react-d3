@@ -1,12 +1,12 @@
 const React = require("react")
 const { Component } = require("react")
-const ReactDom = require("react-dom")
+const d3 = require("d3")
 class Line extends Component {
     constructor(props) {
         super(props)
         var config = {
-            width: 1000,
-            height: 600,
+            width: 800,
+            height: 600*800/1000,
             top: 50,
             left: 50,
             data: [
@@ -18,7 +18,6 @@ class Line extends Component {
             ]
         }
         this.state = Object.assign(config, this.props)
-        window.l = this
     }
     componentWillReceiveProps(nextprops) {
         this.setState(Object.assign({}, this.state, nextprops))
@@ -33,6 +32,8 @@ class Line extends Component {
     }
     componentDidUpdate() {
         // console.log("componentDidUpdate", arguments)
+        window.d3=d3
+        d3.select("#lineAxis").select("g").remove()
         d3.select("#lineAxis").select("g").remove()
         var data = this.state.data
         var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
@@ -76,7 +77,16 @@ class Line extends Component {
         }).y(function (d) {
             return yScale(d.y);
         }).curve(d3.curveCatmullRom.alpha(0.5))
-        return (<div><div
+        return (<div
+            style={{
+                display: `flex`,
+                justifyContent: `flex-start`
+            }}
+        ><div
+            style={{
+                width: `800px`
+            }}
+        ><div
             style={{
                 width: '100%',//this.state.width,
                 position: 'relative',
@@ -104,14 +114,23 @@ class Line extends Component {
                 <g id="lineAxis" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
             </svg>
         </div>
+        </div>
             <div>
-                <ul>
+                <h3>this is data of the line</h3>
+                <ul style={{
+                    listStyle: 'none',
+                    textAlign: `left`,
+                    padding: `0px`,
+                    margin: `0px 20px 0px 30px`,
+                    width: `200px`
+                }}>
                     {this.state.data.map((item, index) => {
                         return <li key={index}>{"x: " + item.x + ", y: " + item.y}</li>
                     })}
                 </ul>
             </div>
-        </div >)
+        </div>)
     }
 }
 module.exports = Line
+export default Line

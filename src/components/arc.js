@@ -1,6 +1,6 @@
 const React = require("react")
 const { Component } = require("react")
-const ReactDom = require("react-dom")
+const d3 = require("d3")
 class Arc extends Component {
     constructor(props) {
         super(props)
@@ -46,11 +46,26 @@ class Arc extends Component {
         var arcdata = d3.pie().value(function (d) { return d.number; })(this.state.data)
         var arc = d3.arc().padAngle(2).padRadius(2).innerRadius(this.state.innerRadius).outerRadius(this.state.outerRadius)
         //console.log(arc.centroid)
-        return (<div><svg style={{
-            width: this.state.width,
-            height: this.state.height,
-            userSelect: "none"
-        }}>
+        return (<div style={{
+            display: `flex`,
+            justifyContent: `flex-start`
+        }}><div style={{
+            width: `800px`
+            }}><div style={{
+                width: '100%',//this.state.width,
+                position: 'relative',
+                //overflow: 'hidden',
+                paddingBottom: this.state.height / this.state.width * 100 + '%',
+                }}><svg viewBox={"0 0 " + this.state.width + " " + this.state.height}
+                    preserveAspectRatio="xMinYMin meet"
+                    style={{
+                        width: '100%',
+                        position: 'absolute',
+                        top: '0',
+                        left: '0',
+                        bottom: '0',
+                        userSelect: "none"
+                    }}>
             <g ref="g" style={{ "transform": 'translate(' + (this.state.width / 2) + 'px, ' + (this.state.height / 2) + 'px)' }}>
                 {arcdata.map((item, index) => {
                     return (<path key={index} d={arc(item)} fill={"rgba(" + Math.round(Math.random() * 256) + "," + Math.round(Math.random() * 256) + "," + Math.round(Math.random() * 256) + "," + (Math.random() / 2 + 0.5) + ")"}>
@@ -61,13 +76,19 @@ class Arc extends Component {
                     </text>)
                 })}
             </g>
-        </svg>
-            <ul>
+        </svg></div>
+            </div><ul style={{
+                listStyle: 'none',
+                textAlign: `left`,
+                padding: `0px`,
+                margin: `0px 20px 0px 30px`,
+                width: `200px`
+            }}>
                 {arcdata.map((item, index) => {
                     return <li key={index}>{item.data.name + "  :  " + item.data.number}</li>
                 })}
-            </ul>
-        </div>)
+            </ul></div>)
     }
 }
 module.exports = Arc
+export default Arc

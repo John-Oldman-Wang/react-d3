@@ -2,8 +2,7 @@ const React = require("react")
 const {
     Component
 } = require("react")
-const ReactDom = require("react-dom")
-window.React = React
+
 const d3 = require("d3")
 var color = d3.schemeCategory20;
 color = color.concat(d3.schemeCategory20b);
@@ -293,3 +292,4 @@ class ChinaMap extends Component {
     }
 }
 module.exports = ChinaMap
+exports.default = ChinaMap

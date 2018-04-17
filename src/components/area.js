@@ -1,12 +1,21 @@
 const React = require("react")
 const { Component } = require("react")
-const ReactDom = require("react-dom")
+const d3 = require("d3")
+function format(t) {
+    if (!t) {
+        return format(new Date())
+    }
+    var year = t.getFullYear()
+    var month = t.getMonth()
+    var date = t.getDate()
+    return `${year}年${month + 1}月${date}日`
+}
 class Area extends Component {
     constructor(props) {
         super(props)
         var config = {
-            width: 1100,
-            height: 600,
+            width: 800,
+            height: 600*800/1100,
             top: 50,
             left: 50,
             data: [
@@ -34,6 +43,7 @@ class Area extends Component {
     }
     componentDidUpdate() {
         // console.log("componentDidUpdate", arguments)
+        d3.select("#main").select("g").remove()
         d3.select("#main").select("g").remove()
         var data = this.state.data
         var xScale = d3.scaleTime().domain(d3.extent(data, function (d) {
@@ -65,7 +75,6 @@ class Area extends Component {
         d3.select("#main").append('g').attr("transform", "translate(0," + (this.state.height - 2 * this.state.top) + ")").call(xAxis)
     }
     render() {
-        // console.log("render")
         var data = this.state.data
         var xScale = d3.scaleTime().domain(d3.extent(data, function (d) {
             return d.date;
@@ -83,25 +92,54 @@ class Area extends Component {
         }).curve(d3.curveCatmullRom.alpha(0.5))
         var xAxis = d3.axisBottom(xScale)
         var yAxis = d3.axisLeft(yScale)
-        return (<div><svg style={{
-            width: this.state.width,
-            height: this.state.height,
-            userSelect: "none"
-        }}>
-            <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}>
+        return (<div
+            style={{
+                display: `flex`,
+                justifyContent: `flex-start`
+            }}
+        ><div
+            style={{
+                width: `800px`
+            }}
+        >
+                <div style={{
+                    width: '100%',//this.state.width,
+                    position: 'relative',
+                    //overflow: 'hidden',
+                    paddingBottom: this.state.height / this.state.width * 100 + '%',
+                }}>
+                    <svg viewBox={"0 0 " + this.state.width + " " + this.state.height}
+                        preserveAspectRatio="xMinYMin meet"
+                        style={{
+                            width: '100%',
+                            position: 'absolute',
+                            top: '0',
+                            left: '0',
+                            bottom: '0',
+                            userSelect: "none"
+                        }}>
+                        <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}>
+                            {this.state.data.map((item, index) => {
+                                return <circle key={index} cx={xScale(item.date)} cy={yScale(item.value)} r="4" stroke="black" strokeWidth="1" fill="none" />
+                            })}
+                            <path d={area(this.state.data)} fill="rgba(0,0,200,0.5)" strokeWidth="1px" stroke="rgba(0,0,200,0.5)"></path>
+                        </g>
+                        <g id="main" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
+                    </svg></div>
+            </div> <ul
+                style={{
+                    listStyle: 'none',
+                    textAlign: `left`,
+                    padding: `0px`,
+                    margin: `0px 20px 0px 30px`,
+                    width: `200px`
+                }}
+            >
                 {this.state.data.map((item, index) => {
-                    return <circle key={index} cx={xScale(item.date)} cy={yScale(item.value)} r="4" stroke="black" strokeWidth="1" fill="none" />
+                    return <li key={index}>{"x: " + format(item.date) + ", y: " + item.value}</li>
                 })}
-                <path d={area(this.state.data)} fill="rgba(0,0,200,0.5)" strokeWidth="1px" stroke="rgba(0,0,200,0.5)"></path>
-            </g>
-            <g id="main" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}></g>
-        </svg>
-            <ul>
-                {this.state.data.map((item, index) => {
-                    return <li key={index}>{"x: " + item.date + ", y: " + item.value}</li>
-                })}
-            </ul>
-        </div>)
+            </ul></div>)
     }
 }
 module.exports = Area
+export default Area
