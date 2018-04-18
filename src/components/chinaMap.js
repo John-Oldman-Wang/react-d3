@@ -10,8 +10,8 @@ color = color.concat(d3.schemeCategory20c);
 var projection, path;
 
 var config = {
-    width: 1000,
-    height: 800
+    width: 800,
+    height: 800*800/1000
 }
 class ChinaMap extends Component {
     // constructor(props) {

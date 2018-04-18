@@ -21,17 +21,13 @@ class Line extends Component {
     }
     componentWillReceiveProps(nextprops) {
         this.setState(Object.assign({}, this.state, nextprops))
-        // console.log("componentWillReceiveProps", arguments)
     }
     shouldComponentUpdate(nextprops, nextstate) {
-        // console.log("arc shouldComponentUpdate")
         return true
     }
     componentWillUpdate() {
-        // console.log("componentWillUpdate", arguments)
     }
     componentDidUpdate() {
-        // console.log("componentDidUpdate", arguments)
         window.d3=d3
         d3.select("#lineAxis").select("g").remove()
         d3.select("#lineAxis").select("g").remove()
@@ -106,7 +102,7 @@ class Line extends Component {
                     userSelect: "none"
                 }}>
                 <g ref="g" style={{ "transform": 'translate(' + this.state.left + 'px, ' + this.state.top + 'px)' }}>
-                    <path d={line(data)} fill="none" strokeWidth="1px" stroke="red"></path>
+                    <path d={line(data)} fill="none" strokeWidth="1px" stroke="#604f9f"></path>
                     {this.state.data.map((item, index) => {
                         return <circle key={index} cx={xScale(item.x)} cy={yScale(item.y)} r="4" stroke="black" strokeWidth="1" fill="#fff" />
                     })}
@@ -116,7 +112,7 @@ class Line extends Component {
         </div>
         </div>
             <div>
-                <h3>this is data of the line</h3>
+                {/* <h3>this is data of the line</h3> */}
                 <ul style={{
                     listStyle: 'none',
                     textAlign: `left`,
