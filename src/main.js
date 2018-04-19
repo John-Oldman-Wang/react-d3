@@ -113,6 +113,14 @@ class App extends Component {
                 { date: format(null, 2, 3, 2, 4), value: 99.80 },
                 { date: format(null, 2, 3, 2, 4, 2), value: 99.47 }
             ],
+            arcData: [
+                { "number": 4, "name": "Locke" },
+                { "number": 8, "name": "Reyes" },
+                { "number": 15, "name": "Ford" },
+                { "number": 16, "name": "Jarrah" },
+                { "number": 23, "name": "Shephard" },
+                { "number": 42, "name": "Kwon" }
+            ],
             data: data,
             select: data,
             focus: ''
@@ -151,7 +159,7 @@ class App extends Component {
                 <h1>Area</h1>
                 <Area data={this.state.areaData}></Area>
                 <h1>Arc</h1>
-                <Arc />
+                <Arc data={this.state.arcData}/>
                 <h1>ChinaMap</h1>
                 <div style={{
                     position: `relative`,
@@ -210,6 +218,14 @@ setInterval(() => {
             { date: format(null, ...areaArr.slice(0, 3)), value:  random(90, 100) },
             { date: format(null, ...areaArr.slice(0, 4)), value:  random(90, 100) },
             { date: format(null, ...areaArr.slice(0, 5)), value:  random(90, 100) }
+        ],
+        arcData: [
+            { "number": random(1, 4) | 0, "name": "Locke" },
+            { "number": random(4, 8) | 0, "name": "Reyes" },
+            { "number": random(10, 15) | 0, "name": "Ford" },
+            { "number": random(16, 20) | 0, "name": "Jarrah" },
+            { "number": random(20, 25) | 0, "name": "Shephard" },
+            { "number": random(25, 50) | 0, "name": "Kwon" }
         ]
     })
 }, 2200);
