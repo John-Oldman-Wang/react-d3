@@ -165,7 +165,6 @@ class App extends Component {
                         zIndex: 100
                     }} className='btn btn-primary'
                         onClick={() => {
-                            console.log('btn click')
                             this.setState({
                                 select: this.state.data,
                                 focus: ''

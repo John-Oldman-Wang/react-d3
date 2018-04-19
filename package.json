@@ -5,21 +5,13 @@
   "main": "app.js",
   "scripts": {
     "test": "nodemon app.js",
-    "dev": "parcel ./src/index.html",
-    "build": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "html-webpack-plugin": "^2.30.1",
-    "parcel-bundler": "^1.7.1",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "parcel-bundler": "^1.7.1"
   },
   "dependencies": {
     "d3": "^4.12.2",
