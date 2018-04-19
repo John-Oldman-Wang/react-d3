@@ -1,19 +1,19 @@
-import { relative } from "path";
-
 const Line = require("./components/line.js")
 const Area = require("./components/area.js")
 const Arc = require("./components/arc.js")
 const Bar = require("./components/bar.js")
 const ChinaMap = require("./components/chinaMap.js")
-// console.log(reReactact)
 const React = require('react')
 const ReactDom = require('react-dom')
 const Component = React.Component
 const d3 = require("d3")
+require("babel-polyfill");
+const pages={
+    chinaMap: import('../json/chinaMap.all.js')
+}
+
 function format(t, ...arr) {
     if (!t) {
-        // console.log(arr.reduce)
-        // console.log(arr.reduce((a, b) => a + b, 0))
         return format(new Date(), ...arr)
     }
     var t = new Date()
@@ -25,78 +25,6 @@ function format(t, ...arr) {
 class App extends Component {
     constructor(props) {
         super(props)
-        var data = require('../json/data.js')
-        data.mapData = require('../newChina.js')
-        var details = {
-            "新疆": require("../json/xin_jiang.geo.js"),
-            "西藏": require("../json/xi_zang.geo.js"),
-            "内蒙古": require("../json/nei_meng_gu.geo.js"),
-            "青海": require("../json/qing_hai.geo.js"),
-            "四川": require("../json/si_chuan.geo.js"),
-            "黑龙江": require("../json/hei_long_jiang.geo.js"),
-            "甘肃": require("../json/gan_su.geo.js"),
-            "云南": require("../json/yun_nan.geo.js"),
-            "广西": require("../json/guang_xi.geo.js"),
-            "湖南": require("../json/hu_nan.geo.js"),
-            "陕西": require("../json/shan_xi_1.geo.js"),
-            "广东": require("../json/guang_dong.geo.js"),
-            "吉林": require("../json/ji_lin.geo.js"),
-            "河北": require("../json/he_bei.geo.js"),
-            "湖北": require("../json/hu_bei.geo.js"),
-            "贵州": require("../json/gui_zhou.geo.js"),
-            "山东": require("../json/shan_dong.geo.js"),
-            "江西": require("../json/jiang_xi.geo.js"),
-            "河南": require("../json/he_nan.geo.js"),
-            "辽宁": require("../json/liao_ning.geo.js"),
-            "陕西": require("../json/shan_xi_2.geo.js"),
-            "安徽": require("../json/an_hui.geo.js"),
-            "福建": require("../json/fu_jian.geo.js"),
-            "浙江": require("../json/zhe_jiang.geo.js"),
-            "江苏": require("../json/jiang_su.geo.js"),
-            "重庆": require("../json/chong_qing.geo.js"),
-            "宁夏": require("../json/ning_xia.geo.js"),
-            "海南": require("../json/hai_nan.geo.js"),
-            "北京": require("../json/bei_jing.geo.js"),
-            "天津": require("../json/tian_jin.geo.js"),
-            "上海": require("../json/shang_hai.geo.js")
-        }
-        data.children.forEach(item => {
-            item.mapData = details[item.name]
-        })
-        data.children.forEach(item => {
-            item.name
-            data.mapData.features.forEach(i => {
-                if (i.id == item.name) {
-                    item.cp = i.properties.cp
-                    item.size = i.properties.size
-                }
-            });
-        });
-        data.children.forEach(item => {
-            item.children.forEach(i => {
-                i.att1 = Math.ceil(Math.random() * 1000)
-                i.att2 = Math.ceil(Math.random() * Math.random() * i.att1)
-                i.att3 = i.att1 - i.att2
-            })
-        });
-        data.children.forEach(item => {
-            item.att1 = 0
-            item.att2 = 0
-            item.att3 = 0
-            item.children.forEach(i => {
-                item.att1 += i.att1
-                item.att2 += i.att2
-                item.att3 += i.att3
-            })
-        })
-        data.att1 = 0
-        data.att2 = 0
-        data.att3 = 0
-        data.children.forEach(item => {
-            data.att1 += item.att1
-            data.att2 += item.att2
-            data.att3 += item.att3
-        })
         this.state = {
             lineData: [
                 { x: 0, y: 40 }, { x: 1, y: 35 },
@@ -121,10 +49,19 @@ class App extends Component {
                 { "number": 23, "name": "Shephard" },
                 { "number": 42, "name": "Kwon" }
             ],
-            data: data,
-            select: data,
+            data: null,
+            select: null,
             focus: ''
         }
+        pages["chinaMap"].then(res => {
+            var data=res.Index()
+            this.setState({
+                data: data,
+                select: data
+            })
+        }).catch(err => {
+            console.log(err)
+        })
     }
     select(e,item){
         var children = this.state.select.children
@@ -161,7 +98,7 @@ class App extends Component {
                 <h1>Arc</h1>
                 <Arc data={this.state.arcData}/>
                 <h1>ChinaMap</h1>
-                <div style={{
+                {this.state.data ? <div style={{
                     position: `relative`,
                     width:`800px`,
                 }}>
@@ -190,8 +127,7 @@ class App extends Component {
                         cp={this.state.select.cp}
                         scale={this.state.select.size}
                     />
-                </div>
-                
+                </div> : ''}
             </div>)
     }
 }
@@ -212,11 +148,11 @@ setInterval(() => {
     app.setState({
         lineData: arr,
         areaData: [
-            { date: format(null, ...areaArr.slice(0,0) ), value:  random(90, 100) },
+            { date: format(null, ...areaArr.slice(0,0) ), value:  random(80, 100) },
             { date: format(null, ...areaArr.slice(0, 1)), value:  random(90, 100) },
-            { date: format(null, ...areaArr.slice(0, 2)), value:  random(90, 100) },
+            { date: format(null, ...areaArr.slice(0, 2)), value:  random(80, 100) },
             { date: format(null, ...areaArr.slice(0, 3)), value:  random(90, 100) },
-            { date: format(null, ...areaArr.slice(0, 4)), value:  random(90, 100) },
+            { date: format(null, ...areaArr.slice(0, 4)), value:  random(80, 100) },
             { date: format(null, ...areaArr.slice(0, 5)), value:  random(90, 100) }
         ],
         arcData: [
